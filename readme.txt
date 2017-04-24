@@ -1,5 +1,9 @@
-# shardb
-SharDB multi database plugin for WordPress
+=== SharDB ===
+Contributors: wpmuguru
+Tags: database, sharding, multiple, database, multisite, network 
+Requires at least: 3.2
+Tested up to: 4.3
+Stable tag: 2.7.7
 
 Implements a MD5 hash based multiple database sharding structure for WordPress network blog tables.
 
@@ -28,6 +32,10 @@ This plugin is based on [HyperDB](http://wordpress.org/extend/plugins/hyperdb) w
 6. Network activate the SharDB admin tools in Network Admin -> Plugins.
 7. Migrate your data to your DB shards using the SharDB migration screen under Network Admin -> Settings on the main site. 
 8. upload db.php to /wp-content/.
+
+== Screenshots ==
+
+1. Site admin blogs screen showing dataset / partition for each blog.
 
 == Changelog ==
 
