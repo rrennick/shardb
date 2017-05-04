@@ -214,7 +214,7 @@ class SharDB extends wpdb {
 
 		global $vip_db, $shardb_local_db, $enable_home_db;
 
-		$host = $this->db_server['host'];
+		$host = isset( $this->db_server['host'] ) ? $this->db_server['host'] : $this->dbhost;
 		if ( $this->persistent ) {
 
 			$connect_function = $this->use_mysqli ? 'mysqli_connect' : 'mysql_pconnect';
