@@ -36,9 +36,10 @@ class SharDB extends wpdb {
 	var $last_used_server;
 	var $used_servers = array();
 	var $written_servers = array();
+	var $last_found_rows_result = null;
 
 	function __construct($dbuser, $dbpassword, $dbname, $dbhost) {
-		register_shutdown_function( array( &$this, '__destruct' ) );
+		register_shutdown_function( array( $this, '__destruct' ) );
 
 		if ( defined( 'WP_DEBUG' ) )
 			$this->show_errors = (bool) WP_DEBUG;
@@ -456,6 +457,20 @@ class SharDB extends wpdb {
 		return $this->use_mysqli ? ( $link instanceof mysqli ) : is_resource( $link );
 
 	}
+	
+	/**
+	 * Ensure the database is connected before escaping
+	 */
+	function _real_escape( $string ) {
+
+		if ( ! $this->dbh ) {
+			$this->dbh = $this->db_connect( $string );
+		}
+
+		return parent::_real_escape( $string );
+
+	}
+
 	/**
 	 * Disconnect and remove connection from open connections list
 	 * @param string $dbhname
