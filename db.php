@@ -427,7 +427,7 @@ class SharDB extends wpdb {
 			// Close current and prevent future read-only connections to the written cluster
 			if ( $write ) {
 
-				if ( isset( $this->dbhs[$dbhname] ) && $this->is_resource( $this->dbhs[$read_dbh] ) && $this->dbhs[$read_dbh] != $this->dbhs[$dbhname] ) {
+				if ( isset( $this->dbhs[$dbhname] ) && isset( $this->dbhs[$read_dbh] ) && $this->is_resource( $this->dbhs[$read_dbh] ) && $this->dbhs[$read_dbh] != $this->dbhs[$dbhname] ) {
 					$this->disconnect( $read_dbh );
 				}
 
