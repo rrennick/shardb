@@ -2,8 +2,8 @@
 Contributors: wpmuguru
 Tags: database, sharding, multiple, database, multisite, network 
 Requires at least: 3.2
-Tested up to: 4.3
-Stable tag: 2.7.7
+Tested up to: 4.8
+Stable tag: 2.8
 
 Implements a MD5 hash based multiple database sharding structure for WordPress network blog tables.
 
@@ -11,9 +11,9 @@ Implements a MD5 hash based multiple database sharding structure for WordPress n
 
 This is intended for larger WordPress Network installs using an existing 1-3 character MD5 hash (by blog id) based multi-DB sharding structure. It supports 16, 256 or 4096 database shards. It also supports a separate database for blog id 1 and multiple VIP databases (home & VIP code contribution by Luke Poland).
 
-It has been tested with over 50 plugins including BuddyPress 1.1 through 1.5. I have not found any issues with any of the tested plugins. It should support any plugin that works with (and accesses all data via) the regular WordPress database code. 
+It should support any plugin that works with (and accesses all data via) the regular WordPress database code. 
 
-It has been used to power MU version 2.7.1 through WordPress 3.3 sites and upgrade sites from 2.7.1 through to the WordPress 3.3.
+It has been used to power MU version 2.7.1 through WordPress 4.8 sites and upgrade sites from 2.7.1 through to the WordPress 4.8.
 
 A detailed [installation guide](http://wpebooks.com/shardb-installation-guide/) can be purchased for a nominal fee. 
 
@@ -38,6 +38,11 @@ This plugin is based on [HyperDB](http://wordpress.org/extend/plugins/hyperdb) w
 1. Site admin blogs screen showing dataset / partition for each blog.
 
 == Changelog ==
+
+= 2.8 =
+* Add PHP7 support.
+* Fix warnings.
+* Test with WP 4.8
 
 = 2.7.7 =
 * Fixed button URLs in the migration screen.
