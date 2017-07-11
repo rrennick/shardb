@@ -438,8 +438,13 @@ class SharDB extends wpdb {
 
 			while ( count($this->open_connections) > $this->max_connections ) {
 				$oldest_connection = array_shift($this->open_connections);
-				if ( $this->dbhs[$oldest_connection] != $this->dbhs[$dbhname] )
+				if ( ! isset( $this->dbhs[$oldest_connection] ) || ! isset( $this->dbhs[$dbhname] ) ) {
+					continue;
+				}
+
+				if ( $this->dbhs[$oldest_connection] != $this->dbhs[$dbhname] ) {
 					$this->disconnect($oldest_connection);
+				}
 			}
 		}
 		return $this->dbhs[$dbhname];
@@ -475,10 +480,10 @@ class SharDB extends wpdb {
 	 * Disconnect and remove connection from open connections list
 	 * @param string $dbhname
 	 */
-	function disconnect($dbhname) {
+	function disconnect( $dbhname ) {
 
-		if ( $k = array_search($dbhname, $this->open_connections) ) {
-			unset($this->open_connections[$k]);
+		if ( $k = array_search( $dbhname, $this->open_connections ) && isset( $this->open_connections[$k] ) ) {
+			unset( $this->open_connections[$k] );
 		}
 
 		if ( $this->is_resource( $this->dbhs[$dbhname] ) ) {
