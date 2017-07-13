@@ -482,7 +482,8 @@ class SharDB extends wpdb {
 	 */
 	function disconnect( $dbhname ) {
 
-		if ( $k = array_search( $dbhname, $this->open_connections ) && isset( $this->open_connections[$k] ) ) {
+		$k = array_search( $dbhname, $this->open_connections );
+		if ( isset( $this->open_connections[$k] ) ) {
 			unset( $this->open_connections[$k] );
 		}
 
@@ -504,13 +505,31 @@ class SharDB extends wpdb {
 	 */
 	function query($query) {
 
-		if ( preg_match('/^\s*SELECT\s+FOUND_ROWS(\s*)/i', $query) && $this->is_resource($this->last_found_rows_result) ) {
-			return $this->last_found_rows_result;
+		if ( preg_match( '/^\s*SELECT\s+FOUND_ROWS(\s*)/i', $query ) ) {
+			$this->last_result = $this->last_found_rows_result;
+			return 1;
 		}
 
 		$this->dbh = $this->db_connect( $query );
 
-		return $this->is_resource( $this->dbh ) ? parent::query( $query ) : false;
+		if ( ! $this->is_resource( $this->dbh ) ) {
+			return false;
+		}
+
+		$result = parent::query( $query );
+
+		if ( preg_match('/^\s*SELECT\s+SQL_CALC_FOUND_ROWS\s/i', $query) ) {
+
+			$_last_result = $this->last_result;
+			parent::query( 'SELECT FOUND_ROWS()' );
+			$this->last_found_rows_result = $this->last_result;
+			++$this->num_queries;
+
+			$this->last_result = $_last_result;
+
+		}
+
+		return $result;
 
 	}
 	/**
