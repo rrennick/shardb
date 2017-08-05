@@ -1,9 +1,9 @@
 === SharDB ===
 Contributors: wpmuguru
 Tags: database, sharding, multiple, database, multisite, network 
-Requires at least: 3.2
+Requires at least: 4.7
 Tested up to: 4.8
-Stable tag: 2.8
+Stable tag: 2.8.1
 
 Implements a MD5 hash based multiple database sharding structure for WordPress network blog tables.
 
@@ -38,6 +38,10 @@ This plugin is based on [HyperDB](http://wordpress.org/extend/plugins/hyperdb) w
 1. Site admin blogs screen showing dataset / partition for each blog.
 
 == Changelog ==
+
+= 2.8.1 =
+* Fix MySQL FOUND_ROWS() support used for pagination.
+* Fix warnings.
 
 = 2.8 =
 * Add PHP7 support.
