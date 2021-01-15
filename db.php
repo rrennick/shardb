@@ -39,7 +39,8 @@ class SharDB extends wpdb {
 	var $last_found_rows_result = null;
 
 	function __construct($dbuser, $dbpassword, $dbname, $dbhost) {
-		register_shutdown_function( array( $this, '__destruct' ) );
+		// The register_shutdown_function was removed from wp-db in WordPress 5.4
+		//register_shutdown_function( array( $this, '__destruct' ) );
 
 		if ( defined( 'WP_DEBUG' ) )
 			$this->show_errors = (bool) WP_DEBUG;
@@ -108,7 +109,7 @@ class SharDB extends wpdb {
 		// Remove characters that can legally trail the table name
 		$q = rtrim($q, ';/-#');
 		// allow (select...) union [...] style queries. Use the first queries table name.
-		$q = ltrim($q, "\t ("); 
+		$q = ltrim($q, "\t (");
 
 		// Quickly match most common queries
 		if ( preg_match('/^\s*(?:'
@@ -178,7 +179,7 @@ class SharDB extends wpdb {
 	 */
 	function get_ds_part_from_table( $table ) {
 		global $shardb_hash_length, $shardb_dataset, $shardb_num_db, $vip_db;
-		
+
 		$table = str_replace( '\\', '', $table );
 
 		if ( substr( $table, 0, strlen( $this->base_prefix ) ) != $this->base_prefix
@@ -224,7 +225,7 @@ class SharDB extends wpdb {
 		} else {
 
 			$connect_function = $this->use_mysqli ? 'mysqli_connect' : 'mysql_connect';
-			
+
 		}
 
 		if ( $this->single_db ) {
@@ -281,7 +282,7 @@ class SharDB extends wpdb {
 					unset($this->open_connections[$k]);
 					$this->open_connections[] = $dbhname;
 				}
-				
+
 				// Using an existing connection, select the db we need and if that fails, disconnect and connect anew.
 				if (
 					isset( $_server['name'] ) && $this->select( $_server['name'], $this->dbhs[$dbhname] ) ||
@@ -462,7 +463,7 @@ class SharDB extends wpdb {
 		return $this->use_mysqli ? ( $link instanceof mysqli ) : is_resource( $link );
 
 	}
-	
+
 	/**
 	 * Ensure the database is connected before escaping
 	 */
